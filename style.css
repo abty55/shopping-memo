@@ -1,0 +1,61 @@
+body{
+    background-color: #f4f7f6;
+}
+
+.app-wraper{
+    background-color: #fff;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.input-box{
+    text-align: center;
+    margin: 20px;
+}
+
+.acbox{
+    width: 300px;
+}
+
+table{
+    border-collapse: collapse;
+    width: 500px;
+    margin: 20px auto;
+    table-layout: fixed;
+}
+
+th,td{
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+th{
+    background-color: #f5eeee;
+}
+
+button {
+    background-color: #4CAF50; /* 背景をきれいな緑色に */
+    color: white;              /* 文字を白色に */
+    border: none;              /* ★犯人はコレ！初期設定のダサい枠線を完全に消し去る */
+    padding: 10px 20px;        /* ボタンの内側に余白を作って、少し大きくする */
+    border-radius: 8px;        /* 角を丸くする */
+    transition: 0.3s;          /* ホバーした時に、0.3秒かけてフワッと色を変える魔法 */
+}
+
+button:hover{
+    background-color: #3e8e41;
+    cursor: pointer;
+}
+
+tbody tr:nth-child(even){
+    background-color: #f9f9f9;
+}

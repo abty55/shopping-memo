@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買い物メモアプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-wraper">
+        <h1>買い物メモアプリ</h1>
+        <div class="container">
+            <div class="input-box">
+                <h4>以下に追加するコンテンツを入力してください</h4>
+                <input type="text" class="acbox" id="text-box">
+            </div>
+            <div class="input-box">
+                <h4>個数を半角で入力してください</h4>
+                <input type="number" min="0" value="0" id="num">
+            </div>
+        </div>
+
+
+        <div style="text-align: center;">
+            <button onclick="Addcontent()">上記の内容を追加する</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>買うもの</th>
+                    <th>個数</th>
+                    <th>チェック</th>
+                </tr>
+            </thead>
+            <tbody id="mat-memo"></tbody>
+        </table>
+    </div>
+    <div style="text-align: center;">
+        <button type="button" onclick="dataselect()">選択したものを削除</button>
+    </div>
+
+</body>
+
+<script>
+    let memolist = [];
+
+    function Savedata() {
+        //1. 配列memolistを文字に変換
+        let jsonstring = JSON.stringify(memolist);
+        //2. 保存する
+        localStorage.setItem("savedata", jsonstring);
+    }
+
+    function Loaddata() {
+        //1. savedataからデータを取得
+        let jsonstring = localStorage.getItem("savedata");
+        //2. savedataが空でなければ辞書に戻す
+        if (jsonstring != null) {
+            memolist = JSON.parse(jsonstring);
+            updatelist();
+        }
+
+    }
+
+    function Addcontent() {
+        let itemname = document.getElementById("text-box").value;
+        let itemcount = document.getElementById("num").value;
+        if (itemname === "") {
+            alert("買うものを入力してください");
+            return;
+        }
+
+        if (itemcount === "" || itemcount <= 0) {
+            alert("正しい数を入力してください");
+            return;
+        }
+
+        let newitem = { "name": itemname, "count": itemcount };
+        memolist.push(newitem);
+        updatelist();
+        Savedata();
+        document.getElementById("text-box").value = "";
+        document.getElementById("num").value = "0";
+    }
+
+    function updatelist() {
+        let htmlbox = "";
+        for (let item of memolist) {
+            htmlbox += `
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.count}</td>
+                <td><input type="checkbox"></input></td>
+            </tr>
+            `
+        }
+        document.getElementById("mat-memo").innerHTML = htmlbox;
+    }
+
+    function dataselect() {
+        let newlist = [];
+        let checkbox = document.querySelectorAll('#mat-memo input[type="checkbox"]')
+        for (let i = 0; i < checkbox.length; i++) {
+            if (checkbox[i].checked === false) {
+                newlist.push(memolist[i]);
+            }
+        }
+        memolist = newlist;
+        updatelist();
+        Savedata();
+    }
+    Loaddata();
+
+</script>
+
+</html>
